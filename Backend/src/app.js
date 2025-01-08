@@ -24,9 +24,19 @@ app.get('/obra',async (req, res)=> {
 app.get ('/obra/:obraId', async (req,res)=> {
     const obra = await db ('obra').select('*').where( {id: req.params.obraId}).first();
     res.json(obra);
-    res.status.(200).json(obra);
+    res.status(200).json(obra);
 });
 
+//insertar datos en la base de datos
+app.post ('/obra', async (req,res) =>{
+    await db('obra').insert({
+        nombre: req.body.nombre,
+        autor: req.body.autor,
+        año: req.body.año, 
+        estilo: req.body.estilo
+    });
+    res.status(201).json({});
+})
 
 app.listen(8080, () => {
     console.log('El backend ha iniciado en el puerto 8080');
