@@ -1,0 +1,19 @@
+{
+    "name": "practica-frontend",
+    "version": "0.1",
+    "source": "src/index.html",
+    "type": "module",
+
+    "scripts": {
+        "start": "parcel --no-cache",
+        "build": "parcel build"
+    },
+    "devDependencies": {
+        "buffer": "6.0.3",
+        "parcel": "2.13.3",
+        "process": "0.11.10"
+    },
+    "dependencies": {
+        "axios": "1.7.9"
+    }
+}

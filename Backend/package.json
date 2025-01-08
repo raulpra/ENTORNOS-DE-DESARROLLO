@@ -1,0 +1,17 @@
+{
+    "name": "practica",
+    "version" : "0.1",
+    "description": "AA Entornos de desarrollo",
+    "scripts": {
+        "start": "node src/app.js"
+    },
+    "author": "Raul Prada",
+    "licencse": "GPL-2.0-only",
+
+    "dependencies": {
+        "express": "4.21.2",
+        "cors": "2.8.5",
+        "splite3": "^5.1.7",
+        "knex": "3.1.0"
+    } 
+}
