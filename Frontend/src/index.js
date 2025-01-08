@@ -1,1 +1,1 @@
-import axios from 'axios';  //importamos librería axios
+import axios from 'axios';  //importamos librería axios que nos permite comunicar con el backend
