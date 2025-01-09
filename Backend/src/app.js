@@ -36,7 +36,7 @@ app.get ('/obras/:obraId', async (req,res)=> {
 app.get ('/artistas/artistaId', async (req,res) =>{
     const artista = await db ('artistas').select('*').where ({id: req.params.obraId}).first();
     res.status(200).json(artistas);
-})
+});
 
 //insertar datos en la tabla obras
 app.post ('/obras', async (req,res) =>{
@@ -47,7 +47,7 @@ app.post ('/obras', async (req,res) =>{
         estilo: req.body.estilo
     });
     res.status(201).json({});
-})
+});
 
 //insertar datos en la tabla artistas
 app.post ('/artistas', async (req, res) =>{
@@ -56,7 +56,27 @@ app.post ('/artistas', async (req, res) =>{
         pais: req.body.pais
     });
     res.status(201).json({});
-})
+});
+
+//actualizar datos de la tabla obras
+app.put ('/obras/:obrasId', async (req, res) => {
+    await db('obras').update({
+        nombre: req.body.nombre,
+        autor: req.body.autor,
+        año: req.body.año,
+        estilo: req.body.estilo
+    }).where({id: req.params.obrasId});
+    res.status(204).json({});
+});
+
+//actualizar datos de la tabla artistas
+app.put ('/artistas/:artistasId', async (req, res) => {
+    await db('artistas').update({
+        nombre: req.body.nombre,
+        pais: req.body.pais,
+    }).where({id: req.params.artistasId});
+    res.status(204).json({});
+});
 
 
 
