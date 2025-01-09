@@ -33,9 +33,9 @@ app.get ('/obras/:obraId', async (req,res)=> {
 });
 
 //muestra datos por el parámetro id de la taba artistas
-app.get ('/artistas/artistaId', async (req,res) =>{
-    const artista = await db ('artistas').select('*').where ({id: req.params.obraId}).first();
-    res.status(200).json(artistas);
+app.get ('/artistas/:artistaId', async (req,res) =>{
+    const artista = await db ('artistas').select('*').where ({id: req.params.artistaId}).first();
+    res.status(200).json(artista);
 });
 
 //insertar datos en la tabla obras
@@ -78,6 +78,17 @@ app.put ('/artistas/:artistasId', async (req, res) => {
     res.status(204).json({});
 });
 
+//borrar datos de la tabla obras
+app.delete ('/obras/:obrasId', async (req, res)=> {
+    await db ('obras').del().where({id: req.params.obrasId});
+    res.status(204).json({});
+});
+
+//borrar datos de la tabla artistas
+app.delete ('/artistas/:artistasId', async ( req, res) =>{
+    await db ('artistas').del().where({id: req.params.artistasId});
+    res.status(204).json({});
+})
 
 
 app.listen(8080, () => {
