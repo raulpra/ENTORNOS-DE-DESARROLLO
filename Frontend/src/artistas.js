@@ -13,11 +13,23 @@ window.readArtistas = function () {
             const row = document.createElement('tr');
             row.id = 'artista-' + artista.id;
             row.innerHTML = '<td>' + artista.nombre + '</td>' +
-                            '<td>' + artista.pais + '</td>' ;
+                            '<td>' + artista.pais + '</td>' +
+                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm">Actualizar</button><span> </span>' +
+                            '<button type="button" class="btn btn-danger btn-sm" onclick="removeArtista(' + artista.id + ')">Eliminar</button></td>';
             artistasTable.appendChild(row);
         })       
     });
 };
+
+window.removeArtista = function (id) {
+    axios.delete('http://localhost:8080/artistas/' + id)
+        .then((response) => {
+            if (response.status == 204) {
+                document.getElementById('artista-' + id).remove();
+            }
+        });
+};
+
 
 
 window.insertArtistas = function () {
@@ -28,7 +40,9 @@ window.insertArtistas = function () {
         nombre: nombre,
         pais: pais
     })
+    .then(()=> location.reload())
 }
+
 
 //evento para el boton crear que muestra un modal pero a través de javascript y no bootstrap, y así poder hacer que los datos se
 //borren si volvemos a abrir.
@@ -38,3 +52,10 @@ botonCrear.addEventListener('click', ()=>{
     myModal.show();
 }) 
 
+/*botonEliminar.addEventListener('click',()=>{
+
+})
+
+botonModificar.addEventListener('click',() =>{
+
+})*/

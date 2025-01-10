@@ -19,27 +19,29 @@
         <a class="nav-link fs-3" href="artistas.html">ARTISTAS</a>
     </nav>
 
-      <div class="container mt-5 shadow p3 mb-5 bg-gody rounded">
+    <div class="container mt-5 shadow p3 mb-5 bg-gody rounded">
         <table class="table table-hover">
+            <caption>Lista de obras</caption>
             <thead>
                 <tr class="fs-5">
                     <th>OBRA</th>
                     <th>AUTOR</th>
                     <th>AÑO</th>
                     <th>ESTILO</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody id="tableBody">
             </tbody>
         </table>
    
-   <!-- Button trigger modal -->    
-   <button type="button" id="botonCrear" class="btn btn-primary" data-bs-toggle="modal">Añadir</button>
-   <br><br>
-</div>    
+        <!-- Button trigger modal -->    
+        <button type="button" id="botonCrear" class="btn btn-primary" data-bs-toggle="modal">Añadir</button>
+        <br><br>
+    </div>    
 
-<!-- Modal -->
-   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
        <div class="modal-dialog">
            <div class="modal-content">
                <div class="modal-header bg-secondary text-white">
@@ -48,8 +50,6 @@
                </div>
                <div class="modal-body">
                    <form id="artistaForm" >
-                       <!--<input type="text" id="nombre" placeholder="Nombre artista" required><br>
-                       <input type="text" id="pais" placeholder="Pais" required><br>-->
                        <div class="mb-3">
                            <label for="nombre" class="col-form-label">Nombre obra</label>
                            <input type="text" class="form-control" id="nombre" required>
