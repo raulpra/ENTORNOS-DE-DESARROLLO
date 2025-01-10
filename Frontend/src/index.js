@@ -15,7 +15,9 @@ window.readObras = function () {
             row.innerHTML = '<td>' + obra.nombre + '</td>' +
                             '<td>' + obra.autor + '</td>' +
                             '<td>' + obra.año + '</td>' +
-                            '<td>' + obra.estilo + '</td>';
+                            '<td>' + obra.estilo + '</td>'+
+                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm">Actualizar</button><span> </span>' +
+                            '<button type="button" class="btn btn-danger btn-sm" onclick="removeObras(' + obra.id + ')">Eliminar</button></td>';
             obrasTable.appendChild(row);
         })       
     });
@@ -33,8 +35,20 @@ window.insertObras = function () {
         año: año,
         estilo: estilo
     })
+    .then(()=> location.reload())
 }
 
+window.removeObras = function (id) {
+    axios.delete('http://localhost:8080/obras/' + id)
+        .then((response) => {
+            if (response.status == 204) {
+                document.getElementById('obras-' + id).remove();
+            }
+        });
+};
+
+//evento para el boton crear que muestra un modal pero a través de javascript y no bootstrap, y así poder hacer que los datos se
+//borren si volvemos a abrir.
 botonCrear.addEventListener('click', ()=>{
     nombre.value = ''
     autor.value = ''
