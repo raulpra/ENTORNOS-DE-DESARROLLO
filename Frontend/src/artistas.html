@@ -33,13 +33,14 @@
             </tbody>
         </table>
   
-    <!-- Button trigger modal -->    
-        <button type="button" id="botonCrear" class="btn btn-primary" data-bs-toggle="modal">Añadir</button>
+    <!-- Button trigger modal -->         
+        <button type="button" id="botonCrear" class="btn btn-primary" data-bs-toggle="modal">Añadir</button>       
+        <button type="button" id="botonActualizar" class="btn btn-primary" onclick="location.reload()">Actualizar</button>
         <br><br>
     </div>    
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!--Modal añadir artista-->
+    <div class="modal fade" id="añadirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-secondary text-white">
@@ -53,18 +54,47 @@
                             <input type="text" class="form-control" id="nombre" required>
                         </div>
                         <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Pais</label>
+                            <label for="pais" class="col-form-label">Pais</label>
                             <input type="text" class="form-control" id="pais" required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="insertArtistas()">Guardar</button>
+                    <button type="button" class="btn btn-primary"  onclick="insertArtistas()">Guardar</button>
                 </div>
             </div>
         </div>
     </div>    
+
+    <!--Modal actualizar artista-->
+    <div class="modal fade" id="actualizarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary text-white">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modificar artista</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="artistaForm" >
+                        <div class="mb-3">
+                            <label for="nombre" class="col-form-label">Nombre artista</label>
+                            <input type="text" class="form-control" id="nombreNuevo" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="pais" class="col-form-label">Pais</label>
+                            <input type="text" class="form-control" id="paisNuevo">
+                        </div>
+                            <input type="hidden" id="idNuevo">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary"  onclick="updateArtista()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div> 
    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   
