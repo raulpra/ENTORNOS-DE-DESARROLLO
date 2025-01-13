@@ -17,8 +17,8 @@ window.readObras = function () {
                             '<td>' + obra.autor + '</td>' +
                             '<td>' + obra.año + '</td>' +
                             '<td>' + obra.estilo + '</td>'+
-                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm" onclick="datosObra('+ '\'' + obra.id + '\'' + ', ' + '\'' + obra.nombre + '\'' + ', ' + '\'' + obra.autor +'\''+ ', ' + '\''+ obra.año + '\'' + ', ' + '\'' + obra.estilo + '\'' +')">Modificar</button><span> </span>' +
-                            '<button type="button" class="btn btn-danger btn-sm" onclick="removeObras(' + obra.id + ')">Eliminar</button></td>';
+                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm invisible" onclick="datosObra('+ '\'' + obra.id + '\'' + ', ' + '\'' + obra.nombre + '\'' + ', ' + '\'' + obra.autor +'\''+ ', ' + '\''+ obra.año + '\'' + ', ' + '\'' + obra.estilo + '\'' +')">Modificar</button><span> </span>' +
+                            '<button type="button" class="btn btn-danger btn-sm invisible" onclick="removeObras(' + obra.id + ')">Eliminar</button></td>';
             obrasTable.appendChild(row);
         })       
     });
@@ -116,3 +116,28 @@ window.datosObra = function (id, nombre, autor, año, estilo) {
     document.getElementById('estiloNuevo').value = estilo;
     myModal2.show();
 }
+
+//botón Editar para mostrar las opciones de edición u ocultarlas
+let mostrar = false;
+botonEditar.addEventListener('click', ()=>{
+
+    const botonesEliminar = document.querySelectorAll('.btn-danger'); 
+    const botonesModificar = document.querySelectorAll('.btn-success'); 
+    if (mostrar){   
+        botonesEliminar.forEach(boton => { 
+            boton.classList.add('invisible'); 
+        });
+        botonesModificar.forEach(boton => { 
+            boton.classList.add('invisible'); 
+        });
+        mostrar=false;
+    } else{
+        botonesEliminar.forEach(boton => { 
+            boton.classList.remove('invisible'); 
+        });
+        botonesModificar.forEach(boton => { 
+            boton.classList.remove('invisible'); 
+        });
+        mostrar=true;
+    }
+});

@@ -14,7 +14,7 @@ const db = knex({
     useNullAsDefault: true
 });
 
-//muestra todos los datos de la tabla obras
+//muestra todos los datos de la tabla obras.
 app.get('/obras',async (req, res)=> {
     const obra = await db('obras').select('*');
     res.status(200).json(obra);

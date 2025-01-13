@@ -16,8 +16,8 @@ window.readArtistas = function () {
             row.id = 'artista-' + artista.id;
             row.innerHTML = '<td>' + artista.nombre + '</td>' +
                             '<td>' + artista.pais + '</td>' +
-                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm" onclick="datosArtista('+ '\'' + artista.id + '\'' + ', ' + '\'' + artista.nombre + '\'' + ', ' + '\'' + artista.pais + '\'' +')">Moficiar</button><span> </span>' +
-                            '<button type="button" class="btn btn-danger btn-sm" onclick="removeArtista(' + artista.id + ')">Eliminar</button></td>';
+                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm invisible" onclick="datosArtista('+ '\'' + artista.id + '\'' + ', ' + '\'' + artista.nombre + '\'' + ', ' + '\'' + artista.pais + '\'' +')">Moficiar</button><span> </span>' +
+                            '<button type="button" class="btn btn-danger btn-sm invisible" onclick="removeArtista(' + artista.id + ')">Eliminar</button></td>';
             artistasTable.appendChild(row);
         })       
     });
@@ -30,6 +30,7 @@ window.removeArtista = function (id) {
             if (response.status == 204) {
                 document.getElementById('artista-' + id).remove();
                 notifyOk( 'Artista elimninado');
+                location.reload();
             }
         })
         .catch ((error) =>{
@@ -105,3 +106,28 @@ window.datosArtista = function (id, nombre, pais) {
     document.getElementById('paisNuevo').value = pais;
     myModal2.show();
 }
+
+//botón Editar para mostrar las opciones de edición u ocultarlas
+let mostrar = false;
+botonEditar.addEventListener('click', ()=>{
+
+    const botonesEliminar = document.querySelectorAll('.btn-danger'); 
+    const botonesModificar = document.querySelectorAll('.btn-success'); 
+    if (mostrar){   
+        botonesEliminar.forEach(boton => { 
+            boton.classList.add('invisible'); 
+        });
+        botonesModificar.forEach(boton => { 
+            boton.classList.add('invisible'); 
+        });
+        mostrar=false;
+    } else{
+        botonesEliminar.forEach(boton => { 
+            boton.classList.remove('invisible'); 
+        });
+        botonesModificar.forEach(boton => { 
+            boton.classList.remove('invisible'); 
+        });
+        mostrar=true;
+    }
+});
