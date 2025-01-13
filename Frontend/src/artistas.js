@@ -55,6 +55,7 @@ window.insertArtistas = function () {
             if (response.status == 201) {
                 notifyOk('Artista guardado');
                 myModal.hide();
+                location.reload();
             }
         })
         .catch ((error) =>{
@@ -82,6 +83,7 @@ window.updateArtista = function (){
             if (response.status == 204) {
                 notifyOk( 'Artista actualizado');
                 myModal2.hide();
+                location.reload();
             }
         })
         .catch ((error) => {
