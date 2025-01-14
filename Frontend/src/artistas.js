@@ -4,33 +4,37 @@ import { notifyOk, notifyError } from './dialogUtils'; //importamos libreria que
 //para poder usar el modal a través de javascript y no de bootstrap
 const myModal = new bootstrap.Modal(document.getElementById('añadirModal'));
 const myModal2 = new bootstrap.Modal(document.getElementById('actualizarModal'));
+const myModal4 = new bootstrap.Modal(document.getElementById('editarModal'));
 
+let mostrarBoton = false;
+
+//muestra la tabla artistas
 window.readArtistas = function () {
     axios.get('http://localhost:8080/artistas')
         .then((response) => {
             const artistasList = response.data;
             const artistasTable = document.getElementById('tableBody');
-        
-        artistasList.forEach(artista => {
+            artistasTable.innerHTML = '';
+            artistasList.forEach(artista => {
             const row = document.createElement('tr');
             row.id = 'artista-' + artista.id;
             row.innerHTML = '<td>' + artista.nombre + '</td>' +
                             '<td>' + artista.pais + '</td>' +
-                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm invisible" onclick="datosArtista('+ '\'' + artista.id + '\'' + ', ' + '\'' + artista.nombre + '\'' + ', ' + '\'' + artista.pais + '\'' +')">Moficiar</button><span> </span>' +
-                            '<button type="button" class="btn btn-danger btn-sm invisible" onclick="removeArtista(' + artista.id + ')">Eliminar</button></td>';
+                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm ' + (mostrarBoton ? '' : 'invisible' ) + '" onclick="datosArtista('+ '\'' + artista.id + '\'' + ', ' + '\'' + artista.nombre + '\'' + ', ' + '\'' + artista.pais + '\'' +')">Moficiar</button><span> </span>' +
+                            '<button type="button" class="btn btn-danger btn-sm ' + (mostrarBoton ? '' : 'invisible' ) + '" onclick="removeArtista(' + artista.id + ')">Eliminar</button></td>';
             artistasTable.appendChild(row);
         })       
     });
 };
 
-
+//introduce nuevo artista
 window.removeArtista = function (id) {
     axios.delete('http://localhost:8080/artistas/' + id)
         .then((response) => {
             if (response.status == 204) {
                 document.getElementById('artista-' + id).remove();
                 notifyOk( 'Artista elimninado');
-                location.reload();
+                
             }
         })
         .catch ((error) =>{
@@ -38,16 +42,14 @@ window.removeArtista = function (id) {
         });
 };
 
-
+//elimina artista
 window.insertArtistas = function () {
     const nombre = document.getElementById('nombre').value;
     const pais = document.getElementById('pais').value;
-
     if (nombre === '' || pais === ''){
         notifyError ('Uno o más campos están vacios');
         return;
-    }
-    
+    }   
     axios.post('http://localhost:8080/artistas', {
         nombre: nombre,
         pais: pais
@@ -56,7 +58,7 @@ window.insertArtistas = function () {
             if (response.status == 201) {
                 notifyOk('Artista guardado');
                 myModal.hide();
-                location.reload();
+                readArtistas();
             }
         })
         .catch ((error) =>{
@@ -65,7 +67,7 @@ window.insertArtistas = function () {
 }
     
 
-
+//actualiza artista
 window.updateArtista = function (){
     const id = document.getElementById('idNuevo').value; 
     const nombre = document.getElementById('nombreNuevo').value; 
@@ -84,7 +86,7 @@ window.updateArtista = function (){
             if (response.status == 204) {
                 notifyOk( 'Artista actualizado');
                 myModal2.hide();
-                location.reload();
+                readArtistas();
             }
         })
         .catch ((error) => {
@@ -98,8 +100,10 @@ botonCrear.addEventListener('click', ()=>{
     nombre.value = ''
     pais.value = ''
     myModal.show();
+    
 }) 
 
+//muestra los datos de artista en un modal para poder actualizarlos
 window.datosArtista = function (id, nombre, pais) { 
     document.getElementById('idNuevo').value =id;
     document.getElementById('nombreNuevo').value = nombre;
@@ -108,26 +112,31 @@ window.datosArtista = function (id, nombre, pais) {
 }
 
 //botón Editar para mostrar las opciones de edición u ocultarlas
-let mostrar = false;
 botonEditar.addEventListener('click', ()=>{
-
-    const botonesEliminar = document.querySelectorAll('.btn-danger'); 
-    const botonesModificar = document.querySelectorAll('.btn-success'); 
-    if (mostrar){   
-        botonesEliminar.forEach(boton => { 
-            boton.classList.add('invisible'); 
-        });
-        botonesModificar.forEach(boton => { 
-            boton.classList.add('invisible'); 
-        });
-        mostrar=false;
-    } else{
-        botonesEliminar.forEach(boton => { 
-            boton.classList.remove('invisible'); 
-        });
-        botonesModificar.forEach(boton => { 
-            boton.classList.remove('invisible'); 
-        });
-        mostrar=true;
-    }
+    usuario.value =''
+    password.value = ''
+    myModal4.show();
+    
 });
+
+//muestra modal para tener acceso a los botones de modificar y eliminar
+window.loginEditar = function (){
+
+    const usuario = document.getElementById('usuario').value; 
+    const password = document.getElementById('password').value;
+    if (usuario === "usuario" && password === "galeria") {  
+        mostrarBoton = true; 
+        const botonesEliminar = document.querySelectorAll('.btn-danger'); 
+        const botonesModificar = document.querySelectorAll('.btn-success'); 
+        botonCrear.classList.remove('invisible');
+        botonesEliminar.forEach(boton => { 
+            boton.classList.remove('invisible'); 
+        });
+        botonesModificar.forEach(boton => { 
+            boton.classList.remove('invisible'); 
+        });  
+        myModal4.hide();     
+    }else{
+        notifyError('Datos incorrectos');
+    }
+};
