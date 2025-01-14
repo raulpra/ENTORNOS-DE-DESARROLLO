@@ -36,9 +36,8 @@
         </table>
    
         <!-- Button trigger modal -->    
-        <button type="button" id="botonCrear" class="btn btn-primary" data-bs-toggle="modal">Añadir</button>
-        <!--<button type="button" id="botonActualizar" class="btn btn-primary" onclick="location.reload()">Actualizar</button>-->
         <button type="button" id="botonEditar" class="btn btn-primary">Editar</button>
+        <button type="button" id="botonCrear" class="btn btn-primary invisible" data-bs-toggle="modal">Añadir</button>
         <br><br>
     </div>    
 
@@ -114,6 +113,57 @@
             </div>
         </div>
     </div> 
+
+    <!--Modal detalles obra-->
+    <div class="modal fade" id="detallesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary text-white">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Detalles obra</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">                   
+                        <img id="imagenDetalle" class="card-img-top" alt="imagen obra">
+                        <div class="card-body">
+                          <span class="h3" id= "nombreDetalle"></span><br>  
+                          <span class="h5" id= "autorDetalle"></span>                       
+                        </div>                      
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>                  
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+    <!--Modal login para editar-->
+    <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content ">
+                <div class="modal-header bg-danger text-white text">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Necesita permiso para editar</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="artistaForm" >
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Usuario</label>
+                            <input type="text" class="form-control" id="usuario" placeholder="Introduce tu usuario">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="password" placeholder="Introduce tu contraseña">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"  onclick="loginEditar()">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+
     <script  src="./obras.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>     
 

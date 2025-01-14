@@ -4,12 +4,18 @@ import { notifyOk, notifyError } from './dialogUtils'; //importamos libreria que
 //para poder usar el modal a través de javascript y no de bootstrap
 const myModal = new bootstrap.Modal(document.getElementById('añadirModal'));
 const myModal2 = new bootstrap.Modal(document.getElementById('actualizarModal'));
+const myModal3 = new bootstrap.Modal(document.getElementById('detallesModal'));
+const myModal4 = new bootstrap.Modal(document.getElementById('editarModal'));
 
+let mostrarBoton = false;
+
+//muestra la tabla obras
 window.readObras = function () {
     axios.get('http://localhost:8080/obras')
         .then((response) => {
             const obrasList = response.data;
             const obrasTable = document.getElementById('tableBody');
+            obrasTable.innerHTML='';
             obrasList.forEach(obra => {
             const row = document.createElement('tr');
             row.id = 'obras-' + obra.id;
@@ -17,14 +23,15 @@ window.readObras = function () {
                             '<td>' + obra.autor + '</td>' +
                             '<td>' + obra.año + '</td>' +
                             '<td>' + obra.estilo + '</td>'+
-                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm invisible" onclick="datosObra('+ '\'' + obra.id + '\'' + ', ' + '\'' + obra.nombre + '\'' + ', ' + '\'' + obra.autor +'\''+ ', ' + '\''+ obra.año + '\'' + ', ' + '\'' + obra.estilo + '\'' +')">Modificar</button><span> </span>' +
-                            '<button type="button" class="btn btn-danger btn-sm invisible" onclick="removeObras(' + obra.id + ')">Eliminar</button></td>';
+                            '<td class="text-center"><button type="button" class="btn btn-success btn-sm ' + (mostrarBoton ? '' : 'invisible' ) + '" onclick="datosObra('+ '\'' + obra.id + '\'' + ', ' + '\'' + obra.nombre + '\'' + ', ' + '\'' + obra.autor +'\''+ ', ' + '\''+ obra.año + '\'' + ', ' + '\'' + obra.estilo + '\'' +')">Modificar</button><span> </span>' +
+                            '<button type="button" class="btn btn-danger btn-sm ' + (mostrarBoton ? '' : 'invisible' ) + '" onclick="removeObras(' + obra.id + ')">Eliminar</button><span> </span>'
+                            +'<button type="button" class="btn btn-primary btn-sm" onclick="detalleObras(' + obra.id + ')">Detalles</button></td>';
             obrasTable.appendChild(row);
         })       
     });
 };
 
-
+//introduce nueva obra
 window.insertObras = function () {
     const nombre = document.getElementById('nombre').value;
     const autor = document.getElementById('autor').value;
@@ -34,8 +41,7 @@ window.insertObras = function () {
     if (nombre === '' || autor === '' || año ==='' || estilo ===''){
         notifyError ('Uno o más campos están vacios');
         return;
-    }
-    
+    }   
     axios.post('http://localhost:8080/obras', {
         nombre: nombre,
         autor: autor,
@@ -45,8 +51,8 @@ window.insertObras = function () {
         .then((response) => {
             if (response.status == 201) {
                 notifyOk('Obra guardada');
-                myModal.hide();   
-
+                myModal.hide();  
+                readObras(); 
             }
         })
         .catch ((error) =>{
@@ -54,7 +60,8 @@ window.insertObras = function () {
         });      
 }
 
-window.removeObras = function (id) {
+//elimina obra
+window.removeObras = function (id) { 
     axios.delete('http://localhost:8080/obras/' + id)
         .then((response) => {
             if (response.status == 204) {
@@ -67,6 +74,7 @@ window.removeObras = function (id) {
         });
 };
 
+//actualiza la obra
 window.updateObra = function (){
     const id = document.getElementById('idNuevo').value;
     const nombre = document.getElementById('nombreNuevo').value;
@@ -78,7 +86,6 @@ window.updateObra = function (){
         notifyError('Uno o más campos están vacíos'); 
         return; 
     }
-
     axios.put('http://localhost:8080/obras/' + id,{
         nombre: nombre,
         autor: autor,
@@ -89,7 +96,7 @@ window.updateObra = function (){
             if (response.status == 204) {
                 notifyOk( 'Obra actualizada');           
                 myModal2.hide();
-               location.reload();
+                readObras();
             }
         })
         .catch ((error) => {
@@ -108,6 +115,7 @@ botonCrear.addEventListener('click', ()=>{
     myModal.show();
 }) 
 
+//muestra los datos de la obra en un modal para poder actualizarlos
 window.datosObra = function (id, nombre, autor, año, estilo) { 
     document.getElementById('idNuevo').value = id;
     document.getElementById('nombreNuevo').value = nombre;
@@ -118,26 +126,51 @@ window.datosObra = function (id, nombre, autor, año, estilo) {
 }
 
 //botón Editar para mostrar las opciones de edición u ocultarlas
-let mostrar = false;
 botonEditar.addEventListener('click', ()=>{
-
-    const botonesEliminar = document.querySelectorAll('.btn-danger'); 
-    const botonesModificar = document.querySelectorAll('.btn-success'); 
-    if (mostrar){   
-        botonesEliminar.forEach(boton => { 
-            boton.classList.add('invisible'); 
-        });
-        botonesModificar.forEach(boton => { 
-            boton.classList.add('invisible'); 
-        });
-        mostrar=false;
-    } else{
-        botonesEliminar.forEach(boton => { 
-            boton.classList.remove('invisible'); 
-        });
-        botonesModificar.forEach(boton => { 
-            boton.classList.remove('invisible'); 
-        });
-        mostrar=true;
-    }
+    usuario.value =''
+    password.value = ''
+    myModal4.show();
+    
 });
+
+//muestra modal para tener acceso a los botones de modificar y eliminar
+window.loginEditar = function (){
+
+    const usuario = document.getElementById('usuario').value; 
+    const password = document.getElementById('password').value;
+    if (usuario === "usuario" && password === "galeria") {  
+        mostrarBoton = true
+        const botonesEliminar = document.querySelectorAll('.btn-danger'); 
+        const botonesModificar = document.querySelectorAll('.btn-success'); 
+        botonCrear.classList.remove('invisible');
+        botonesEliminar.forEach(boton => { 
+            boton.classList.remove('invisible'); 
+        });
+        botonesModificar.forEach(boton => { 
+            boton.classList.remove('invisible'); 
+        });
+        myModal4.hide();
+    }else{
+        notifyError('Datos incorrectos');
+    }
+};
+
+//muestra modal que nos enseña imagen, nombre y autor tomando datos de la tabla images, que está realiconada con obras y artistas
+window.detalleObras = function(obraId){
+    axios.get('http://localhost:8080/imagenes/obras/' + obraId)
+        .then((response) => {
+            if (response.status == 200) {
+                
+                const imagen = response.data;
+                console.log(imagen);
+                document.getElementById('nombreDetalle').textContent = imagen.obra_nombre;  
+                document.getElementById('autorDetalle').textContent = imagen.artista_nombre;   
+                document.getElementById('imagenDetalle').src = 'http://localhost:8080/images/'+imagen.ruta_imagen;    
+                myModal3.show();
+            }
+        })
+        .catch ((error) => {
+            notifyError ('Error al mostrar la obra');
+        });
+}; 
+    
