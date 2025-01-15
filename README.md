@@ -14,3 +14,7 @@ Este proyecto desarrolla una aplicación web de una Galería de Arte. Nos mostra
 El backend se inicializará en el puerto 8080 (http://localhost:8080/).
 
 El frontend se inicializará en el puerto 1234 (http://localhost:1234/).
+
+---
+
+La especificación completa de la API está disponible en la [Wiki del proyecto](https://github.com/raulpra/ENTORNOS-DE-DESARROLLO/wiki).
