@@ -10,10 +10,27 @@ Este proyecto desarrolla una aplicación web de una Galería de Arte. Nos mostra
 * Para la parte del diseño del frontend se ha utilizado solamente la librería Bootstrap.
 * Se ha utlizado la librería Tostify para mandar mensajes durante la validación si hay error o no.
 
----
-El backend se inicializará en el puerto 8080 (http://localhost:8080/).
+---     
 
-El frontend se inicializará en el puerto 1234 (http://localhost:1234/).
+Para la inicialización de nuestro proyecto, tanto en el backend como en el frontend debemos instalar primeramente todas las dependencias necesarias en la consola con el comando :
+
+```npm install```
+
+Actualizar las dependencias necesarias si fuera necesario:
+
+```npm update```
+
+
+Para inicializar nuestro backend y frontend con el script ```start``` que hemos configuarado en el fichero package.json correspondiente a frontend y backend, ejecutaremos el comando:
+
+```npm start```   
+     
+
+Una vez inicializado nuestro backend se estará ejecutando en el puerto 8080: (http://localhost:8080/)
+
+
+Una vez inicializado nuestro frontend se estará ejecutando en el puerto 1234: (http://localhost:1234/)
+
 
 ---
 
